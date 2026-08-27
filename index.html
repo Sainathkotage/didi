@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#3b6998">
+    <title>Happy Birthday & Rakshabandhan! 🌸✨ | Sister Memory Chronicles</title>
+    
+    <!-- Google Fonts for Handcrafted + Retro Aesthetic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;500;600;700&family=VT323&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="retro-body">
+
+    <!-- Background Canvas for Floating Sparkles & Hearts -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- HTML5 Audio for Forever Young by Alphaville -->
+    <audio id="bgAudioFile" loop preload="auto">
+        <source src="photos/alphaville-forever-young-lyrics_ZH0z8pev.mp3" type="audio/mpeg">
+        <source src="alphaville-forever-young-lyrics_ZH0z8pev.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Top Retro Bar -->
+    <header class="top-retro-bar">
+        <div class="bar-left">
+            <span class="pixel-dot green"></span>
+            <span class="pixel-dot yellow"></span>
+            <span class="pixel-dot red"></span>
+            <span class="bar-title"><i class="fa-solid fa-heart text-pink"></i> SISTER_CHRONICLES.EXE</span>
+        </div>
+        <div class="bar-right">
+            <!-- Music Player Controller -->
+            <div class="music-player-widget" id="musicWidget">
+                <button id="musicToggleBtn" class="retro-icon-btn active-music" title="Play/Pause Forever Young">
+                    <i class="fa-solid fa-music"></i>
+                </button>
+                <div class="music-ticker">
+                    <span class="music-note-icon">🎵</span>
+                    <span id="songTitleText" class="song-title-text">Forever Young - Alphaville</span>
+                </div>
+                <div class="music-bars" id="musicBars">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+            <span class="time-display" id="currentTime">22:24</span>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="app-container">
+
+        <!-- ================= HERO LANDING / LAUNCHER ================= -->
+        <section id="heroScreen" class="window-box active-screen">
+            <div class="window-header">
+                <div class="window-title">
+                    <i class="fa-regular fa-folder-open"></i> LANDSCAPE_MEMORIES.EXE
+                </div>
+                <div class="window-controls">
+                    <button class="win-btn win-min">_</button>
+                    <button class="win-btn win-max">▢</button>
+                    <button class="win-btn win-close">✕</button>
+                </div>
+            </div>
+
+            <div class="window-content">
+                <!-- Retro Loading Bar -->
+                <div class="retro-loading-section">
+                    <div class="loading-label-group">
+                        <span class="pixel-font loading-text">LOADING SISTER MEMORIES...</span>
+                        <span class="pixel-font loading-percent" id="loadPercent">100%</span>
+                    </div>
+                    <div class="retro-progress-outer">
+                        <div class="retro-progress-inner" id="progressBar"></div>
+                    </div>
+                </div>
+
+                <!-- Main Graphic Display -->
+                <div class="retro-banner-frame">
+                    <div class="pixel-art-decor top-left">✨</div>
+                    <div class="pixel-art-decor top-right">🌸</div>
+                    
+                    <div class="hero-badge">SPECIAL DUAL CELEBRATION</div>
+                    <h1 class="hero-main-title">Happy Birthday &<br><span class="highlight-text">Rakshabandhan! 🎀✨</span></h1>
+                    <p class="hero-subtitle">A journey through time: From our tiny chaos days to modern besties!</p>
+
+                    <!-- Start Button Area (Inspired by user design image) -->
+                    <div class="start-btn-wrapper">
+                        <button id="startBtn" class="retro-start-btn">
+                            <span class="btn-inner">
+                                <i class="fa-solid fa-play"></i> START
+                            </span>
+                            <div class="pixel-hand-cursor">👈</div>
+                        </button>
+                    </div>
+                    <p class="music-start-hint"><i class="fa-solid fa-compact-disc fa-spin"></i> Tap START to play photos & "Forever Young" song!</p>
+                </div>
+
+                <!-- Cute Interactive Warning Box (User Image Style) -->
+                <div class="retro-dialog-box">
+                    <div class="dialog-header">
+                        <i class="fa-solid fa-triangle-exclamation"></i> WARNING
+                    </div>
+                    <div class="dialog-body">
+                        <p class="pixel-font dialog-msg">DO YOU WANT TO GO BACK IN TIME?</p>
+                        <div class="dialog-actions">
+                            <button id="dlgYesBtn" class="retro-mini-btn primary">YES! 💕</button>
+                            <button id="dlgNoBtn" class="retro-mini-btn secondary">NO WAY (SHOW ME!) 🚀</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-footer-decor">
+                    <span><i class="fa-solid fa-heart"></i> Made with love by your brother</span>
+                    <span><i class="fa-solid fa-gift"></i> Birthday + Rakhi Special</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= INTERACTIVE MEMORY POPUP STAGE ================= -->
+        <section id="memoryStage" class="window-box hidden-screen">
+            <div class="window-header">
+                <div class="window-title">
+                    <i class="fa-solid fa-film"></i> MEMORY_STAGE.EXE
+                </div>
+                <div class="badge-tag" id="eraTag">CHAPTER 1: OLD MEMORIES (OLD DAYS 🐣)</div>
+                <div class="window-controls">
+                    <button class="win-btn win-close" id="exitStageBtn">✕</button>
+                </div>
+            </div>
+
+            <!-- Stage Control Bar -->
+            <div class="stage-control-bar">
+                <div class="counter-badge">
+                    <span id="currentCount">0</span> / <span id="totalCount">20</span> Memories
+                </div>
+                <div class="stage-actions">
+                    <button id="popNextBtn" class="action-pill primary"><i class="fa-solid fa-images"></i> Pop Next Photo!</button>
+                    <button id="popAllBtn" class="action-pill glow"><i class="fa-solid fa-wand-magic-sparkles"></i> Auto Pop All!</button>
+                    <button id="resetStageBtn" class="action-pill secondary"><i class="fa-solid fa-rotate-left"></i> Re-stack</button>
+                    <button id="openGalleryBtn" class="action-pill accent"><i class="fa-solid fa-border-all"></i> Scrapbook</button>
+                </div>
+            </div>
+
+            <!-- Interactive Floating Polaroid Desk Area -->
+            <div class="polaroid-desk" id="polaroidDesk">
+                <!-- Helper prompt before clicking -->
+                <div class="desk-placeholder" id="deskPlaceholder">
+                    <div class="bounce-icon">👇</div>
+                    <h2>Click "Pop Next Photo!" to start the chronological journey!</h2>
+                    <p>Starting from our earliest throwback pictures to our newest adventures!</p>
+                </div>
+            </div>
+
+            <!-- Transition Announcement Banner when entering New Photos -->
+            <div id="eraTransitionOverlay" class="era-overlay hidden-element">
+                <div class="era-card">
+                    <div class="era-icon">🌟</div>
+                    <h2>Chapter 2: Modern Times!</h2>
+                    <p>Years passed, styles changed, but our sibling bond remains unbreakable! Let's see our newest memories! 🚀</p>
+                    <button id="continueEraBtn" class="retro-mini-btn primary">LET'S GO! ✨</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SCRAPBOOK / GALLERY VIEW ================= -->
+        <section id="gallerySection" class="window-box hidden-screen">
+            <div class="window-header">
+                <div class="window-title">
+                    <i class="fa-solid fa-book-open"></i> MEMORY_SCRAPBOOK.EXE
+                </div>
+                <div class="window-controls">
+                    <button class="win-btn win-close" id="closeGalleryBtn">✕ Back to Stage</button>
+                </div>
+            </div>
+
+            <div class="gallery-toolbar">
+                <div class="filter-group">
+                    <button class="filter-chip active" data-filter="all">All Memories (20)</button>
+                    <button class="filter-chip" data-filter="old">Old Days (15)</button>
+                    <button class="filter-chip" data-filter="new">Recent Vibes (5)</button>
+                </div>
+                <p class="drag-hint"><i class="fa-solid fa-hand-pointer"></i> Tap any photo to enlarge!</p>
+            </div>
+
+            <div class="scrapbook-grid" id="scrapbookGrid">
+                <!-- Dynamically generated polaroid cards -->
+            </div>
+        </section>
+
+        <!-- ================= CELEBRATION HUBS (CAKE + RAKHI + AWARD) ================= -->
+        <section id="celebrationHub" class="celebration-section">
+            
+            <div class="section-title-wrapper">
+                <span class="sub-tag">INTERACTIVE CORNER</span>
+                <h2 class="section-title">Special Birthday & Rakhi Events 🎁</h2>
+            </div>
+
+            <div class="celebration-cards-grid">
+                
+                <!-- CARD 1: VIRTUAL BIRTHDAY CAKE -->
+                <div class="celeb-card cake-card">
+                    <div class="card-ribbon">BIRTHDAY SPECIAL</div>
+                    <h3><i class="fa-solid fa-cake-candles"></i> Virtual Birthday Cake</h3>
+                    <p>Tap candles to light them up, then click blow to release birthday magic & confetti!</p>
+                    
+                    <div class="cake-display">
+                        <div class="candles-container" id="candlesGroup">
+                            <div class="candle unlit" data-index="1"><div class="flame"></div></div>
+                            <div class="candle unlit" data-index="2"><div class="flame"></div></div>
+                            <div class="candle unlit" data-index="3"><div class="flame"></div></div>
+                            <div class="candle unlit" data-index="4"><div class="flame"></div></div>
+                        </div>
+                        <div class="cake-body">
+                            <div class="cake-layer top-layer">🎂</div>
+                            <div class="cake-layer frosting"></div>
+                        </div>
+                    </div>
+
+                    <div class="cake-actions">
+                        <button id="lightCakeBtn" class="celeb-btn"><i class="fa-solid fa-fire"></i> Light Candles</button>
+                        <button id="blowCakeBtn" class="celeb-btn primary"><i class="fa-solid fa-wind"></i> Blow Candles! 🎉</button>
+                    </div>
+                </div>
+
+                <!-- CARD 2: VIRTUAL RAKHI CEREMONY -->
+                <div class="celeb-card rakhi-card">
+                    <div class="card-ribbon rakhi">RAKSHA BANDHAN</div>
+                    <h3><i class="fa-solid fa-hands-holding-heart"></i> Virtual Rakhi Ceremony</h3>
+                    <p>Tie the sacred Rakhi thread to celebrate our eternal sibling promise & protection!</p>
+
+                    <div class="rakhi-display">
+                        <div class="rakhi-wrist">
+                            <div class="wrist-graphic">🤝</div>
+                            <div id="placedRakhi" class="placed-rakhi hidden-element">
+                                <span class="rakhi-motif">🌸✨</span>
+                                <span class="rakhi-thread"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rakhi-actions">
+                        <button id="tieRakhiBtn" class="celeb-btn rakhi-style"><i class="fa-solid fa-ribbon"></i> Tie Rakhi Thread 💕</button>
+                        <button id="sweetBoxBtn" class="celeb-btn"><i class="fa-solid fa-cookie-bite"></i> Feed Sweets 🍬</button>
+                    </div>
+                    <p id="rakhiStatus" class="status-msg">Click "Tie Rakhi Thread" to complete ritual!</p>
+                </div>
+
+                <!-- CARD 3: BEST SISTER AWARD CERTIFICATE -->
+                <div class="celeb-card award-card">
+                    <div class="card-ribbon award">OFFICIAL TROPHY</div>
+                    <h3><i class="fa-solid fa-trophy"></i> Best Sister Award</h3>
+                    <p>Certified 100% Best Sister in the whole world! Click to view your official trophy certificate.</p>
+                    
+                    <div class="trophy-preview" id="openAwardBtn">
+                        <div class="trophy-icon">🏆</div>
+                        <div class="trophy-title">SISTER OF THE YEAR</div>
+                        <span class="click-tag">Tap to Inspect Certificate 📜</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FOOTER / LOVE NOTE -->
+        <footer class="app-footer">
+            <div class="footer-paper">
+                <div class="tape-piece top-tape"></div>
+                <h3 class="handwritten-title">Dear Sister 💕</h3>
+                <p class="handwritten-text">
+                    "From political talks to fighting over the TV remote and falling from the bed XD, growing up with you has been the greatest gift. Whether it's your birthday or Rakshabandhan, I'm always grateful to have you as my didi!"
+                </p>
+                <div class="footer-sign">With all my love,<br><span class="sign-name">Your Favorite (Shayad) Brother ✨</span></div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- ================= PHOTO EXPAND MODAL ================= -->
+    <div id="photoModal" class="modal-overlay hidden-element">
+        <div class="modal-card">
+            <button class="modal-close" id="closeModalBtn">✕</button>
+            <div class="polaroid-large">
+                <div class="polaroid-tape"></div>
+                <div class="polaroid-img-box">
+                    <img id="modalImg" src="" alt="Sister Memory">
+                </div>
+                <div class="polaroid-caption-box">
+                    <span class="modal-date-badge" id="modalDate">OLD MEMORY</span>
+                    <h3 id="modalTitle" class="modal-title">Memory Title</h3>
+                    <p id="modalDesc" class="modal-desc">Memory Description details...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= AWARD CERTIFICATE MODAL ================= -->
+    <div id="awardModal" class="modal-overlay hidden-element">
+        <div class="certificate-box">
+            <button class="modal-close" id="closeAwardBtn">✕</button>
+            <div class="cert-border">
+                <div class="cert-inner">
+                    <div class="cert-badge">🏆 OFFICIAL CERTIFICATE 🏆</div>
+                    <h1 class="cert-title">WORLD'S BEST SISTER</h1>
+                    <p class="cert-subtitle">This honor is proudly presented to</p>
+                    <h2 class="cert-name">MY AMAZING SISTER</h2>
+                    
+                    <div class="cert-body">
+                        <p>For excellence in being the most caring, stylish, funny, and sometimes crazy sibling. Authorized with lifetime rights to annoy me, me demand gifts, and you being the no. farter of the house.</p>
+                    </div>
+
+                    <div class="cert-traits">
+                        <span class="trait-tag">✨ 100% Hardworking (Crazy resilient)</span>
+                        <span class="trait-tag">💖 Drama Queen (sometimes)</span>
+                        <span class="trait-tag">🌟 Best Advice Giver (Every Single Time !!!)</span>
+                        <span class="trait-tag">🎀 Future IAS ^.^</span>
+                    </div>
+
+                    <div class="cert-signatures">
+                        <div class="sig-line">
+                            <span class="sig-font">Brother's Stamp</span>
+                            <label>Official Seal</label>
+                        </div>
+                        <div class="stamp-seal">APPROVED 💖</div>
+                        <div class="sig-line">
+                            <span class="sig-font">Forever Besties</span>
+                            <label>Date: Today & Forever</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
